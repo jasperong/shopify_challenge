@@ -8,8 +8,8 @@
   <body ng-controller="ProductsController">
     <!-- {{arrays[0][0]}} -->
     <!-- {{products}} -->
-    <ul ng-repeat="array in arrays">
-      <li ng-repeat="product in array | filter: filterByProductType">
+    <ul>
+      <li ng-repeat="product in products | filter: filterByProductType">
         {{product.title}}
         <ul>
           <li ng-repeat="variant in product.variants">
@@ -18,6 +18,8 @@
         </ul>
       </li>
     </ul>
-    <strong>Total: {{totalPrice}}</strong>
+    <strong>Total before tax: {{totalPrice | currency}}</strong><br>
+    <strong>Tax: {{totalPrice * 0.13 | currency}}</strong><br>
+    <strong>Total: {{totalPrice * 1.13 | currency}}</strong>
   </body>
 </html>

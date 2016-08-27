@@ -7,6 +7,7 @@
     var getProducts = function(pageNumber){
       $http.get('http://shopicruit.myshopify.com/products.json?page=' + pageNumber)
             .then(onSuccess, onError)
+            .then(totalPrice)
             return array;
     };
 
@@ -14,7 +15,12 @@
 
     var onSuccess = function(response){
       console.log('success');
-      array.push(response.data.products);
+
+      for (var i = 0; i < response.data.products.length; i++) {
+        array.push(response.data.products[i]);
+      }
+      return array;
+      // array.push(response.data.products);
     };
 
     var onError = function(reason){
@@ -26,8 +32,8 @@
         getProducts(i);
         console.log(i);
       }
-      $scope.arrays = array;
-      totalPrice(array);
+      $scope.products = array;
+      // totalPrice(array);
     };
 
     $scope.selectedProductTypes = ['Watch', 'Clock'];
@@ -37,12 +43,14 @@
     }
 
     var totalPrice = function(arr){
-
       // FIX THIS FUNCTION !!!!!!!
       var prices = [];
       for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < arr[i].variants.length; j++) {
-          prices.push(arr[i].variants[j].price);
+          if (($scope.selectedProductTypes.indexOf(arr[i].product_type) !== -1)
+                && arr[i].variants[j].taxable) {
+            prices.push(parseFloat(arr[i].variants[j].price));
+          }
         }
       }
       $scope.totalPrice = prices.reduce(add, 0);
