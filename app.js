@@ -4,32 +4,33 @@
 
   app.controller('ProductsController', function($http, $scope, $filter){
 
-
     var getProducts = function(pageNumber){
       $http.get('http://shopicruit.myshopify.com/products.json?page=' + pageNumber)
-            .then(onProductSuccess, onError)
+            .then(onSuccess, onError)
+            return array;
     };
 
-    var onProductSuccess = function(response){
+    var array = [];
+
+    var onSuccess = function(response){
       console.log('success');
       $scope.products = response.data.products;
+      array.push(response.data.products);
     };
 
     var onError = function(reason){
       console.log("Error:" + reason);
     };
 
-    // var getAllPagesProducts = function(){
-    //   var productsArray = []
-    //   for (var i = 1; i < 6; i++) {
-    //     productsArray.concat(getProducts(i));
-    //     console.log(productsArray);
-    //   }
-    //   $scope.array = productsArray;
-    // };
+    var getAllPagesProducts = function(){
+      for (var i = 1; i < 6; i++) {
+        getProducts(i);
+        console.log(i);
+      }
+      $scope.arrays = array;
+    };
 
-    console.log(getProducts(2));
-    getProducts(1);
+    console.log(getAllPagesProducts());
   });
 
 }());
