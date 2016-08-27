@@ -6,21 +6,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
   <body ng-controller="ProductsController">
-    {{arrays[0][0]}}
+    <!-- {{arrays[0][0]}} -->
     <!-- {{products}} -->
-    <ul>
-      <li ng-repeat="array in arrays">
+    <ul ng-repeat="array in arrays">
+      <li ng-repeat="product in array | filter: filterByProductType">
+        {{product.title}}
         <ul>
-          <li ng-repeat="product in array | filter: {product_type: 'Clock'}">
-            {{product.title}}
-            <ul>
-              <li ng-repeat="variant in product.variants">
-                {{variant.price | currency}}
-              </li>
-            </ul>
+          <li ng-repeat="variant in product.variants">
+            {{variant.title}}: {{variant.price | currency}} <span ng-show"variant.taxable">+tax</span>
           </li>
         </ul>
       </li>
     </ul>
+    <strong>Total: {{totalPrice}}</strong>
   </body>
 </html>

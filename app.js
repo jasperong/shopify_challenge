@@ -14,7 +14,6 @@
 
     var onSuccess = function(response){
       console.log('success');
-      $scope.products = response.data.products;
       array.push(response.data.products);
     };
 
@@ -28,9 +27,32 @@
         console.log(i);
       }
       $scope.arrays = array;
+      totalPrice(array);
     };
 
-    console.log(getAllPagesProducts());
+    $scope.selectedProductTypes = ['Watch', 'Clock'];
+
+    $scope.filterByProductType = function(product){
+        return ($scope.selectedProductTypes.indexOf(product.product_type) !== -1)
+    }
+
+    var totalPrice = function(arr){
+
+      // FIX THIS FUNCTION !!!!!!!
+      var prices = [];
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < arr[i].variants.length; j++) {
+          prices.push(arr[i].variants[j].price);
+        }
+      }
+      $scope.totalPrice = prices.reduce(add, 0);
+    };
+
+    var add = function(a, b) {
+      return a + b;
+    }
+
+    getAllPagesProducts();
   });
 
 }());
