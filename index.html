@@ -3,23 +3,40 @@
   <head>
     <meta charset="utf-8">
     <title>Shopify Challenge</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
   <body ng-controller="ProductsController">
-    <!-- {{arrays[0][0]}} -->
-    <!-- {{products}} -->
-    <ul>
-      <li ng-repeat="product in products | filter: filterByProductType">
-        {{product.title}}
-        <ul>
-          <li ng-repeat="variant in product.variants">
-            {{variant.title}}: {{variant.price | currency}} <span ng-show"variant.taxable">+tax</span>
-          </li>
-        </ul>
-      </li>
-    </ul>
-    <strong>Total before tax: {{totalPrice | currency}}</strong><br>
-    <strong>Tax: {{totalTax | currency}}</strong><br>
-    <strong>Total: {{totalPrice + totalTax | currency}}</strong>
+
+    <table class="table-hover table">
+      <thead>
+        <th>Product Name</th>
+        <th>Color / Variant</th>
+        <th>Price</th>
+      </thead>
+      <tbody ng-repeat="product in products | filter: filterByProductType">
+        <tr ng-repeat="variant in product.variants">
+          <td>{{product.title}}</td>
+          <td>{{variant.title}}</td>
+          <td>{{variant.price | currency}}</td>
+        </tr>
+      </tbody>
+      <tr>
+        <td></td>
+        <td>Before Tax:</td>
+        <td> {{totalPrice | currency}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>Taxes:</td>
+        <td> {{totalTax | currency}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>Total:</td>
+        <td> {{totalPrice + totalTax | currency}}</td>
+      </tr>
+    </table>
   </body>
 </html>
