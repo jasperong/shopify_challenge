@@ -8,6 +8,7 @@
       $http.get('http://shopicruit.myshopify.com/products.json?page=' + pageNumber)
             .then(onSuccess, onError)
             .then(totalPrice)
+            .then(productTax)
             return array;
     };
 
@@ -47,18 +48,30 @@
       var prices = [];
       for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < arr[i].variants.length; j++) {
-          if (($scope.selectedProductTypes.indexOf(arr[i].product_type) !== -1)
-                && arr[i].variants[j].taxable) {
+          if ($scope.selectedProductTypes.indexOf(arr[i].product_type) !== -1){
             prices.push(parseFloat(arr[i].variants[j].price));
           }
         }
       }
       $scope.totalPrice = prices.reduce(add, 0);
+      return arr;
     };
 
     var add = function(a, b) {
       return a + b;
     }
+
+    var productTax = function(arr){
+      var taxes = []
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = 0; j < arr[i].variants.length; j++) {
+          if (arr[i].variants[j].taxable && ($scope.selectedProductTypes.indexOf(arr[i].product_type)) !== -1){
+            taxes.push(parseFloat(arr[i].variants[j].price * 0.13));
+          }
+        }
+      }
+      $scope.totalTax = taxes.reduce(add, 0);
+    };
 
     getAllPagesProducts();
   });

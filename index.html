@@ -19,7 +19,7 @@
       </li>
     </ul>
     <strong>Total before tax: {{totalPrice | currency}}</strong><br>
-    <strong>Tax: {{totalPrice * 0.13 | currency}}</strong><br>
-    <strong>Total: {{totalPrice * 1.13 | currency}}</strong>
+    <strong>Tax: {{totalTax | currency}}</strong><br>
+    <strong>Total: {{totalPrice + totalTax | currency}}</strong>
   </body>
 </html>
