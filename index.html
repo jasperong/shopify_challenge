@@ -12,14 +12,15 @@
 
     <form ng-submit="getAllPagesProducts(5)" ng-hide="submitted">
       <ul class="list-group" ng-repeat="type in availableProductTypes">
-        <label class="col-sm-2">
+        <label class="col-sm-3">
           <li class="list-group-item">
             <input type="checkbox" name="name" ng-value="{{type}}" ng-click="toggleSelection(type)">
             {{type}}
           </li>
         </label>
       </ul>
-        <input type="submit" id="submit" value="Search" class="col-md-6" ng-click="submit()">
+      <div class="col-md-4"></div>
+        <input type="submit" id="submit" value="Search" class="col-md-4" ng-click="submit()">
     </form>
 
     <table class="table-hover table" ng-show="submitted">
@@ -36,6 +37,8 @@
         </tr>
       </tbody>
       <tr>
+        <td></td>
+        <td></td>
         <td></td>
       </tr>
       <tr>
