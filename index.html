@@ -14,8 +14,8 @@
       <ul class="list-group" ng-repeat="type in availableProductTypes">
         <label class="col-sm-2">
           <li class="list-group-item">
-              <input type="checkbox" name="name" ng-value="{{type}}" ng-click="toggleSelection(type)">
-              {{type}}
+            <input type="checkbox" name="name" ng-value="{{type}}" ng-click="toggleSelection(type)">
+            {{type}}
           </li>
         </label>
       </ul>
@@ -23,7 +23,7 @@
         <input type="submit" id="submit" value="Search" class="col-md-6">
     </form>
 
-    <table class="table-hover table">
+    <table class="table-hover table" ng-show='selectedProductTypes'>
       <thead>
         <th>Product Name</th>
         <th>Color / Variant</th>
