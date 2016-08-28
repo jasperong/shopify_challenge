@@ -30,7 +30,7 @@
 
     // Filters search results to only selected product types
     $scope.filterByProductType = function(product){
-        return ($scope.selectedProductTypes.indexOf(product.product_type) !== -1)
+      return ($scope.selectedProductTypes.indexOf(product.product_type) !== -1)
     }
 
     // Calculates total price of filtered items, needs refactoring
@@ -64,10 +64,8 @@
     // Main function which gets fired on form submission
     $scope.getAllPagesProducts = function(pageCount){
       resetScopeData();
-
       for (var i = 1; i <= pageCount; i++) {
         getProducts(i);
-        console.log(i);
       }
       $scope.products = array;
     };
@@ -90,6 +88,10 @@
       } else {
         $scope.selectedProductTypes.push(productType);
       }
+    };
+
+    $scope.submit = function(){
+      $scope.submitted = true;
     };
 
   // End of module

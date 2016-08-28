@@ -10,7 +10,7 @@
   </head>
   <body ng-controller="ProductsController">
 
-    <form ng-submit="getAllPagesProducts(5)">
+    <form ng-submit="getAllPagesProducts(5)" ng-hide="submitted">
       <ul class="list-group" ng-repeat="type in availableProductTypes">
         <label class="col-sm-2">
           <li class="list-group-item">
@@ -19,11 +19,10 @@
           </li>
         </label>
       </ul>
-      {{selectedProductTypes}}
-        <input type="submit" id="submit" value="Search" class="col-md-6">
+        <input type="submit" id="submit" value="Search" class="col-md-6" ng-click="submit()">
     </form>
 
-    <table class="table-hover table" ng-show='selectedProductTypes'>
+    <table class="table-hover table" ng-show="submitted">
       <thead>
         <th>Product Name</th>
         <th>Color / Variant</th>
