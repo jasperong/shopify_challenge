@@ -1,7 +1,6 @@
 require 'net/http'
 require 'json'
 
-prices = []
 
 def get_data_by_page(page_number)
   url = "http://shopicruit.myshopify.com/products.json?page=#{page_number}"
@@ -10,30 +9,31 @@ def get_data_by_page(page_number)
   JSON.parse(response)
 end
 
-page_number = 1
+def get_data_from_all_pages
+  prices = []
+  page_number = 1
+  data = get_data_by_page(page_number)
 
-data = get_data_by_page(page_number)
+  until data['products'].empty?
+    data = get_data_by_page(page_number)
+    data['products'].each do |product|
 
-until data['products'].empty?
-
-  data['products'].each do |product|
-
-    if ['Clock', 'Watch'].include?(product['product_type'])
-      product['variants'].each do |variant|
-        prices << (variant['taxable'] ? variant['price'].to_i * 1.13 : variant['price'].to_i)
+      if ['Clock', 'Watch'].include?(product['product_type'])
+        product['variants'].each do |variant|
+          prices << (variant['taxable'] ? variant['price'].to_i * 1.13 : variant['price'].to_i)
+        end
       end
+
     end
-
+  page_number += 1
   end
-
-page_number += 1
-
-data = get_data_by_page(page_number)
-
+  return prices
 end
 
-
+def print_result(price_array)
+  total = price_array.inject(:+)
+  total_in_currency = sprintf('%.2f', total)
+  return total_in_currency
+end
 # puts prices
-total = prices.inject(:+)
-
-puts "$ #{sprintf('%.2f', total)}"
+puts print_result(get_data_from_all_pages)
