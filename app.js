@@ -15,6 +15,14 @@
             .then(totalPrice)
     };
 
+    var array = [];
+    var array_ = angular.copy(array);
+
+    // Resets $scope.products in case of multiple submissions
+    var resetScopeData = function(){
+      array = angular.copy(array_)
+    };
+
     // Success function after API call, grabs products array and pushes to empty array
     var onSuccess = function(response){
       for (var i = 0; i < response.data.products.length; i++) {
@@ -68,14 +76,6 @@
         getProducts(i);
       }
       $scope.products = array;
-    };
-
-    var array = [];
-    var array_ = angular.copy(array);
-
-    // Resets $scope.products in case of multiple submissions
-    var resetScopeData = function(){
-      array = angular.copy(array_)
     };
 
     $scope.selectedProductTypes = [];

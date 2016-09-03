@@ -1,7 +1,6 @@
 require 'net/http'
 require 'json'
 
-
 def get_data_by_page(page_number)
   url = "http://shopicruit.myshopify.com/products.json?page=#{page_number}"
   uri = URI(url)
@@ -20,7 +19,7 @@ def get_data_from_all_pages
 
       if ['Clock', 'Watch'].include?(product['product_type'])
         product['variants'].each do |variant|
-          prices << (variant['taxable'] ? variant['price'].to_i * 1.13 : variant['price'].to_i)
+          prices << (variant['taxable'] ? variant['price'].to_f * 1.13 : variant['price'].to_f)
         end
       end
 
